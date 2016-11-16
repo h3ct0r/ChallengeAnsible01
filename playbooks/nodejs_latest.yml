@@ -1,0 +1,24 @@
+- name: install nodejs
+  hosts: testservers
+  gather_facts: True
+  sudo: True
+  tasks:
+    - name: Install basic packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - build-essential
+        - git
+        - mcrypt
+        - nginx
+        - curl
+
+    - name: add apt key for nodesource
+      apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+    - name: add repo for nodesource
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+        update_cache: yes
+
+    - name: install nodejs
+      apt: name=nodejs

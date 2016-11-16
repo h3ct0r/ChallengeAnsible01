@@ -21,6 +21,11 @@ Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin H
 - modify the project to allow use of several cores with the `cluster` module
 - create a tag on the node project
 - Add the tag to the git config on the play (node_app.yml)
-- Configure play to use `pm2` as deploy tool of the node app 
+- Configure play to use `pm2` as deploy tool of the node app, using `-i max` as a load balancer
 - Test play with version=2.0.0 now
 - To change revisions of the app only need to change version parameter now. (playing with 1.0.0 and 2.0.0)
+- Generated TSL keys for HTTPS:
+	`openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+        -subj /CN=localhost \
+        -keyout files/nginx.key -out files/nginx.crt`
+- 

@@ -15,3 +15,5 @@ Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin H
 - test if we reach the new host
 	`ansible challengeserver -m ping`
 - server reached but remote server shows error '"/bin/sh: 1: /usr/bin/python: not found\r\n"', so we need to install python2.7
+- run `ansible-playbook -s -v python2.yml` to install python2.7
+- 

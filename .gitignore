@@ -1,0 +1,4 @@
+# ignore amazon pem file
+
+*.pem
+.DS_Store

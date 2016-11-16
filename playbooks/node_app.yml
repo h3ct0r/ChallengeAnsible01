@@ -1,0 +1,43 @@
+---
+# Extracted and modified from: http://www.mbejda.com/deploying-node-applications-with-ansible/
+- name: NodeJS APP for Challenge
+  hosts: testservers
+  become: yes
+  become_method: sudo
+  vars:
+    - homeDir: /home/ubuntu
+    - appDir : challengeapp
+    - repo: ChallengeNodeApp01
+    - account: h3ct0r
+
+  tasks:
+    - name: Install pm2
+      npm: name=pm2 global=yes production=yes
+
+    - name: Create APP Directory
+      file: path={{homeDir}}/{{appDir}} state=directory
+
+    - name: Git Clone Repo
+      git:  repo=https://github.com/{{account}}/{{repo}}.git 
+            dest={{homeDir}}/{{appDir}}
+            update=yes
+            force=yes 
+            accept_hostkey=yes
+            version=1.0.0
+      register: git_finished
+
+    - name: Running NPM install
+      npm: path={{homeDir}}/{{appDir}}/app
+      register: npm_finished
+      when: git_finished.changed
+
+    - name: Stop APP
+      sudo_user: ubuntu
+      command: pm2 stop app chdir={{homeDir}}/{{appDir}}/app
+      ignore_errors: yes
+
+    - name: Start APP
+      sudo_user: ubuntu
+      command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}/app
+      ignore_errors: yes
+      when: npm_finished.changed

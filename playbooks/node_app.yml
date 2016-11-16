@@ -23,7 +23,7 @@
             update=yes
             force=yes 
             accept_hostkey=yes
-            version=1.0.0
+            version=2.0.0
       register: git_finished
 
     - name: Running NPM install
@@ -31,13 +31,15 @@
       register: npm_finished
       when: git_finished.changed
 
-    - name: Stop APP
-      sudo_user: ubuntu
-      command: pm2 stop app chdir={{homeDir}}/{{appDir}}/app
-      ignore_errors: yes
-
     - name: Start APP
       sudo_user: ubuntu
-      command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}/app
+      command: chdir={{homeDir}}/{{appDir}}/app {{ item }}
+      with_items:
+        - "pm2 start index.js -i max"
+        - pm2 reload all
       ignore_errors: yes
-      when: npm_finished.changed
+
+    # - name: Reload changes
+    #   sudo_user: ubuntu
+    #   command: chdir={{homeDir}}/{{appDir}}/app pm2 reload all
+    #   ignore_errors: yes

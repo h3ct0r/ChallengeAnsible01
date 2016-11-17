@@ -1,13 +1,18 @@
 # ChallengeAnsible01
 
-Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin Hochstein) and Ansible for DevOps (Jeff Geerling).
+Running this challenge from MacOS, with the help of: Ansible Up & Running (Lorin Hochstein) and Ansible for DevOps (Jeff Geerling), an several other websites.
 
 ## First steps:
 
+- Create a new AWS instance or use Vagrant to create a new VM.
 - Install brew if not already installed
 - `brew install ansible`
+- Clone this repo!
+- `cd ChallengeAnsible01/playbooks`
+- And then run `ansible-playbook -s -v challenge_full_config.yaml`
+- Good to go!
 
-## And then:
+## And then what I did:
 
 - create a `playbook` folder to store your playbooks
 - add your hosts domains/ip to a `hosts` file
@@ -32,4 +37,6 @@ Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin H
 - Added script to test server payload.
 	- run: `python load_test.py --threads 30 --requests 300 --url http://localhost/`
 - Get server log and begin testing the parsing script `scp -i "../key.pem" user@domain:'/var/log/nginx/access.log' /tmp/`
-- 
+- Added script to parse and send email to server
+- Configured the crontab to run it
+- Add new playbook to join all configurations!

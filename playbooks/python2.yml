@@ -1,3 +1,4 @@
+---
 - name: Add a python2 binaries
   hosts: testservers
   become: yes

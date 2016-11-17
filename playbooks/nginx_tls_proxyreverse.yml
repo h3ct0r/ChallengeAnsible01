@@ -29,19 +29,26 @@
       template: src=templates/nginx.conf.j2 dest={{ conf_file }}
       notify: restart nginx
 
-    - name: Start APP
-      sudo_user: ubuntu
-      command: {{ item }}
+    - name: Enable nginx as service
+      command: "{{ item }}"
       with_items:
         - systemctl enable nginx.service
         - systemctl daemon-reload
         - systemctl restart nginx.service
       ignore_errors: yes
 
-    - name: Listen on 1.2.3.4
+    - name: Enable nginx respawn
       lineinfile: dest=/etc/systemd/system/multi-user.target.wants/nginx.service
                   line="Restart=always"
-                  insertafter="[Service]"
+                  insertafter='^\[Service\]'
+                  state=present
+
+    - name: Reload nginx
+      command: "{{ item }}"
+      with_items:
+        - systemctl daemon-reload
+        - systemctl restart nginx.service
+      ignore_errors: yes
 
     - name: enable configuration
       file: dest=/etc/nginx/sites-enabled/default src={{ conf_file }} state=link

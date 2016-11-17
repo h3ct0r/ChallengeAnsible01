@@ -28,4 +28,4 @@ Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin H
 	`openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
         -subj /CN=localhost \
         -keyout files/nginx.key -out files/nginx.crt`
-- 
+- Adding auto respawn to nginx (pm2 does it by default on app crash)

@@ -21,14 +21,17 @@ def send_email(emailfrom, emailto, smtp_server, port, username, password, subjec
 	import smtplib
 	import mimetypes
 	from email.mime.multipart import MIMEMultipart
+	from email.mime.text import MIMEText
 
 	msg = MIMEMultipart()
 	msg["From"] = emailfrom
 	msg["To"] = emailto
 	msg["Subject"] = subject
-	msg.preamble = content
+	msg.preamble = subject
 
-	server = smtplib.SMTP("smtp.gmail.com:587")
+	msg.attach(MIMEText(content, 'html'))
+
+	server = smtplib.SMTP(smtp_server + ":" + port)
 	server.starttls()
 	server.login(username,password)
 	server.sendmail(emailfrom, emailto, msg.as_string())
@@ -84,13 +87,21 @@ if __name__ == "__main__":
 	print '\tTotal requests:{}'.format(total_requests)
 	if len(total_requests.keys()) > 0:
 		subject = 'Daily request report'
-		msg = ['Request enumaration of successful requests (http 200):\n']
+		msg = ['<html><head></head><body><div>Request enumaration of successful requests (http 200):</div><br>']
 		for k,v in total_requests.items():
+			msg.append('<div>')
 			msg.append('Query:')
+			msg.append('<strong>')
 			msg.append(k)
+			msg.append('</strong>&nbsp;&nbsp;')
 			msg.append('size:')
-			msg.append(v)
+			msg.append('<strong>')
+			msg.append(str(v))
+			msg.append('</strong>')
 			msg.append('\n')
+			msg.append('</div><br>')
+		msg.append('</body></html>')
 
-		print '[INFO]', 'Sending email...'
-		send_email(args.email_from, args.email_to, args.smtp_server, args.smtp_port, args.smtp_user, args.smtp_pass, subject, ''.join(msg))
+		str_msg = ''.join(msg)
+		print '[INFO]', 'Sending email...', args.email_to
+		send_email(args.email_from, args.email_to, args.smtp_server, args.smtp_port, args.smtp_user, args.smtp_pass, subject, str_msg)

@@ -31,3 +31,5 @@ Running this challenge on MacOS, with the help of: Ansible Up & Running (Lorin H
 - Adding auto respawn to nginx (pm2 does it by default on app crash)
 - Added script to test server payload.
 	- run: `python load_test.py --threads 30 --requests 300 --url http://localhost/`
+- Get server log and begin testing the parsing script `scp -i "../key.pem" user@domain:'/var/log/nginx/access.log' /tmp/`
+- 

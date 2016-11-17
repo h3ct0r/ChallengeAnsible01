@@ -47,7 +47,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', default='http://localhost')
     parser.add_argument('--threads', default=30)
-    parser.add_argument('--requests', default=300)
+    parser.add_argument('--requests', default=100)
     parser.add_argument('--debug', dest='debug', action='store_true')
     args = parser.parse_args()
 
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             executor.submit(get_url, args.url, args.requests): i for i in xrange(args.threads)
         }
 
-        print '[INFO]', 'Working...'
+        print '[INFO]', 'Working...', waits
 
         kbps_l = []
         total_kb_l = []

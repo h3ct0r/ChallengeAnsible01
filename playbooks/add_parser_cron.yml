@@ -1,0 +1,34 @@
+---
+- name: Configure a crontab to parse nginx logs and send an email report
+  hosts: testservers
+  become: yes
+  become_method: sudo
+  vars:
+    parser_file: /var/srv/parse_access_log.py
+    log_file: /var/log/nginx/access.log
+    parser_arg: " --log {{ log_file }} --email-from joaomaca.testingchallenge@gmail.com --email-to joaomaca.testingchallenge@gmail.com --smtp-user joaomaca.testingchallenge@gmail.com --smtp-pass 12345challenge"
+
+  tasks:
+    - name: Install pip
+      apt: name=python-pip update_cache=yes cache_valid_time=3600
+
+    - name: Install future python packages
+      pip: name=futures
+
+    - name: create directory to store the scripts
+      file: path=/var/srv/ state=directory
+
+    - name: copy parser script
+      copy: src=files/parse_access_log.py dest={{ parser_file }} owner=root mode=0644
+
+    - name: Creates weekly backup cronjob
+      cron: minute="30" hour="1"
+            name="Daily Nginx log parser and email sender"
+            cron_file=/etc/crontab
+            user=root
+            job="/usr/bin/python {{ parser_file }} {{parser_arg}}"
+
+    - name: Execute the parser first time
+      sudo_user: ubuntu
+      command: "/usr/bin/python  {{ parser_file }} {{parser_arg}}"
+      ignore_errors: yes

@@ -1,0 +1,10 @@
+---
+- name: Full configuration of the Challenge server
+  hosts: testservers
+  become: yes
+  become_method: sudo
+  tasks:
+    - include: python2.yml
+    - include: node_app.yml
+    - include: nginx_tls_proxyreverse.yml
+    - include: add_parser_cron.yml

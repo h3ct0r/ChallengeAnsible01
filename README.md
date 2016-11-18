@@ -1,10 +1,12 @@
 # ChallengeAnsible01
 
+"Who wants some?" Duke Nukem, 1996 
 [![N|Solid](https://yt3.ggpht.com/-KI4pTwXOjLs/AAAAAAAAAAI/AAAAAAAAAAA/htvqMgipOWo/s48-c-k-no-mo-rj-c0xffffff/photo.jpg)](https://github.com/h3ct0r/)
 
-Running this challenge from MacOS, with the help of: Ansible Up & Running (Lorin Hochstein) and Ansible for DevOps (Jeff Geerling), an several other websites.
+## Introduction 
+This challenge was implemented and executed from MacOS Yosemite, with the help of: Ansible Up & Running (Lorin Hochstein), Ansible for DevOps (Jeff Geerling), and a big list of several other websites.
 
-## First steps:
+## First steps/How to 
 
 - Create a new AWS instance or use Vagrant to create a new VM.
 - Install brew if not already installed

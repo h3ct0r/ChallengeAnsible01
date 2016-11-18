@@ -1,2 +1,2 @@
 [testservers]
-challengeserver ansible_ssh_host=54.173.215.143 ansible_ssh_port=22
+challengeserver ansible_ssh_host=54.147.161.222 ansible_ssh_port=22

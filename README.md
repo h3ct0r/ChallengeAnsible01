@@ -1,5 +1,7 @@
 # ChallengeAnsible01
 
+[![N|Solid](https://yt3.ggpht.com/-KI4pTwXOjLs/AAAAAAAAAAI/AAAAAAAAAAA/htvqMgipOWo/s48-c-k-no-mo-rj-c0xffffff/photo.jpg)](https://github.com/h3ct0r/)
+
 Running this challenge from MacOS, with the help of: Ansible Up & Running (Lorin Hochstein) and Ansible for DevOps (Jeff Geerling), an several other websites.
 
 ## First steps:
@@ -11,6 +13,20 @@ Running this challenge from MacOS, with the help of: Ansible Up & Running (Lorin
 - `cd ChallengeAnsible01/playbooks`
 - And then run `ansible-playbook -s -v challenge_full_config.yaml`
 - Good to go!
+
+## Scripts
+
+##### load_test.py
+
+> Small application to test load on a WebServer
+
+`python load_test.py --url http://localhost/ --threads 10 --requests 100`
+
+##### parse_access_log.py
+
+> Another small app to parse nginx access log files, and then send a report of the accessed resources
+
+`python parse_access_log.py --log /var/log/nginx/access.log --email-from fromme@gmail.com --email-to tome@gmail.com --smtp-user fromme@gmail.com --smtp-pass 12345`
 
 ## And then what I did:
 
